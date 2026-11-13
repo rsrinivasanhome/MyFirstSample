@@ -1,0 +1,93 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h1>Employees</h1>
+
+@if (Model.StatusMessage is not null)
+{
+    <div class="alert alert-danger">@Model.StatusMessage</div>
+}
+
+<p><a asp-page="/Employees/Edit" class="btn btn-primary">Add Employee</a></p>
+
+@if (Model.Employees.Count == 0)
+{
+    <p>No employees found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Age</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Employees)
+            {
+                <tr>
+                    <td>@e.EmployeeId</td>
+                    <td>@e.EmployeeName</td>
+                    <td>@e.Age</td>
+                    <td class="text-end">
+                        <a asp-page="/Employees/Edit" asp-route-id="@e.EmployeeId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <form method="post" asp-page-handler="DeleteEmployee" asp-route-id="@e.EmployeeId" class="d-inline"
+                              onsubmit="return confirm('Delete this employee?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h1 class="mt-5">Companies</h1>
+
+<p><a asp-page="/Companies/Edit" class="btn btn-primary">Add Company</a></p>
+
+@if (Model.CompanyServiceUnavailable)
+{
+    <div class="alert alert-warning">The company service is currently unavailable. Showing the last stored company list.</div>
+}
+
+@if (Model.Companies.Count == 0)
+{
+    <p>No companies found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Company ID</th>
+                <th>Company Name</th>
+                <th>City</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Companies)
+            {
+                <tr>
+                    <td>@c.CompanyId</td>
+                    <td>@c.CompanyName</td>
+                    <td>@c.City</td>
+                    <td class="text-end">
+                        <a asp-page="/Companies/Edit" asp-route-id="@c.CompanyId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <form method="post" asp-page-handler="DeleteCompany" asp-route-id="@c.CompanyId" class="d-inline"
+                              onsubmit="return confirm('Delete this company?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

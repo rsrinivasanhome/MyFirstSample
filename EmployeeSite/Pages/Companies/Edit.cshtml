@@ -1,0 +1,27 @@
+@page "{id:int?}"
+@model EmployeeSite.Pages.Companies.EditModel
+@{
+    ViewData["Title"] = Model.IsNew ? "Add Company" : "Edit Company";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Company.CompanyName" class="form-label"></label>
+        <input asp-for="Company.CompanyName" class="form-control" />
+        <span asp-validation-for="Company.CompanyName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Company.City" class="form-label"></label>
+        <input asp-for="Company.City" class="form-control" />
+        <span asp-validation-for="Company.City" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="/Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
